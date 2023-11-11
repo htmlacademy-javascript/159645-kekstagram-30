@@ -20,4 +20,7 @@ const createIdGenerator = () => {
   };
 };
 
-export {getRandomInteger, getRandomArrayElement, createIdGenerator};
+//Функция для проверки нажатой клавиши ESC
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export { getRandomInteger, getRandomArrayElement, createIdGenerator, isEscapeKey };

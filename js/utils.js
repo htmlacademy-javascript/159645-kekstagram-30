@@ -1,26 +1,19 @@
-// Функция-генератор для получения случайного идентификатора
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-// Выбор рандомного элемента из массива данных
-const getRandomArrayElement = (items) =>
-  items[getRandomInteger(0, items.length - 1)];
-
-// Функция генерирует уникальный Id
-const createIdGenerator = () => {
-  let lastGeneratedId = 0;
-
-  return () => {
-    lastGeneratedId += 1;
-    return lastGeneratedId;
-  };
-};
-
 //Функция для проверки нажатой клавиши ESC
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { getRandomInteger, getRandomArrayElement, createIdGenerator, isEscapeKey };
+//Функция для показа ошибки при загрузке данных
+const REMOVE_MESSAGE_TIMEOUT = 5000;
+
+const errorMessageElement = document.querySelector('#data-error')
+  .content.querySelector('.data-error');
+
+const showErrorMessage = () => {
+  const errorElement = errorMessageElement.cloneNode(true);
+  document.body.append(errorElement);
+
+  setTimeout (() => {
+    errorElement.remove();
+  }, REMOVE_MESSAGE_TIMEOUT);
+};
+
+export { isEscapeKey, showErrorMessage };

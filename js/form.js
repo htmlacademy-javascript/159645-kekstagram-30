@@ -63,7 +63,7 @@ const onUploadInputChange = () => {
 };
 
 const sendForm = async (form) => {
-  if (!pristine.validate()) {
+  if (! pristine.validate()) {
     return;
   }
   try {

@@ -5,7 +5,7 @@ import { showErrorMessage } from './utils.js';
 
 const bootstrap = async () => {
   try {
-    const pictures = loadPictures();
+    const pictures = await loadPictures();
     renderGallery(pictures);
   } catch (error) {
     showErrorMessage();

@@ -8,7 +8,7 @@ const bootstrap = async () => {
   try {
     const pictures = await loadPictures();
     renderGallery(pictures);
-    initFilter();
+    initFilter(pictures);
   } catch (error) {
     showErrorMessage();
   }

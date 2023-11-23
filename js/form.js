@@ -6,11 +6,12 @@ import { showSuccessMessage, showErrorMessage } from './message.js';
 
 const COUNT_MAX_HASHTAG = 5;
 const VALID_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const FILES_TYPES = ['jpg', 'jpeg', 'png'];
 
 const ERROR_TEXT = {
   INVALID_COUNT: `Максимум ${COUNT_MAX_HASHTAG} хэштэгов`,
   NOT_UNIQUE: 'Хэштэги должны быть уникальными',
-  INVALID_PATTERN: 'Неправельный хэштэг',
+  INVALID_PATTERN: 'Неправельный хэштэг'
 };
 
 const SubmitButtonText = {
@@ -26,11 +27,13 @@ const cancelButton = formElement.querySelector('.img-upload__cancel');
 const textHashtagsElement = formElement.querySelector('.text__hashtags');
 const textDescriptionElement = formElement.querySelector('.text__description');
 const submitButton = formElement.querySelector('.img-upload__submit');
+const photoPreview = formElement.querySelector('.img-upload__preview img');
+const effectsPreview = formElement.querySelectorAll('.effects__preview');
 
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error',
+  errorTextClass: 'img-upload__field-wrapper--error'
 });
 
 const toggleSubmitButton = (isDisabled) => {
@@ -45,6 +48,15 @@ const toggleSubmitButton = (isDisabled) => {
 const openForm = () => {
   uploadOverlay.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
+  const file = uploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILES_TYPES.some((it) => fileName.endsWith(it));
+  if (file && matches) {
+    photoPreview.src = URL.createObjectURL(file);
+    effectsPreview.forEach((element) => {
+      element.style.backgroundImage = `url('${URL.createObjectURL(file)}')`;
+    });
+  }
   document.addEventListener('keydown', onDocumentKeydown);
 };
 

@@ -7,11 +7,13 @@ import { showSuccessMessage, showErrorMessage } from './message.js';
 const COUNT_MAX_HASHTAG = 5;
 const VALID_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const FILES_TYPES = ['jpg', 'jpeg', 'png'];
+const MAX_LENGTH = 140;
 
 const ERROR_TEXT = {
   INVALID_COUNT: `Максимум ${COUNT_MAX_HASHTAG} хэштэгов`,
   NOT_UNIQUE: 'Хэштэги должны быть уникальными',
-  INVALID_PATTERN: 'Неправельный хэштэг'
+  INVALID_PATTERN: 'Неправельный хэштэг',
+  INVALID_LENGTH: 'Комментарий не может быть длиннее 140 символов!',
 };
 
 const SubmitButtonText = {
@@ -103,11 +105,8 @@ const isTextFiledFocused = () =>
   document.activeElement === textHashtagsElement ||
   document.activeElement === textDescriptionElement;
 
-const isErrorMessageExists = () => {
-  Boolean(document.querySelector('.error'));
-};
-
 function onDocumentKeydown(evt) {
+  const isErrorMessageExists = Boolean(document.querySelector('.error'));
   if (isEscapeKey(evt) && !isTextFiledFocused() && !isErrorMessageExists) {
     evt.preventDefault();
     closeForm();
@@ -131,9 +130,12 @@ const validateHashtagsRepeate = (value) => {
   return lowerCaseTags.length === uniqueHashtags.length;
 };
 
+const validateTextCommentLength = () => textDescriptionElement.value.length <= MAX_LENGTH;
+
 pristine.addValidator(textHashtagsElement, validateHashtags, ERROR_TEXT.INVALID_PATTERN, 1, true);
 pristine.addValidator(textHashtagsElement, validateHashtagsRepeate, ERROR_TEXT.NOT_UNIQUE, 2, true);
 pristine.addValidator(textHashtagsElement, validateHashtagsCount, ERROR_TEXT.INVALID_COUNT, 3, true);
+pristine.addValidator(textDescriptionElement, validateTextCommentLength, ERROR_TEXT.INVALID_LENGTH, true);
 
 uploadInput.addEventListener('change', onUploadInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);

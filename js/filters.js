@@ -24,8 +24,7 @@ const compareNumbers = (pictureA, pictureB) => {
 };
 
 const sortsPictures = (pictures) => {
-  const test = pictures.slice().sort(compareNumbers);
-  return test;
+  return pictures.slice().sort(compareNumbers);
 };
 
 const randomPictures = (data) => {
@@ -46,7 +45,17 @@ const filterHandlers = {
   [FilterEnum.DISCUSSED]: (data) => sortsPictures(data)
 };
 
-const repain = (evt, filter, data) => {
+const onFiltersButtonClick = (evt) => {
+  const filtersButtonElement = filtersFormElement.querySelectorAll('.img-filters__button');
+  filtersButtonElement.forEach((item) => {
+    item.classList.remove('img-filters__button--active');
+  });
+  if (evt.target.matches('.img-filters__button')) {
+    evt.target.classList.add('img-filters__button--active');
+  }
+};
+
+const repaint = (evt, filter, data) => {
   const filteredData = filterHandlers[filter](data);
   const pictures = document.querySelectorAll('.picture');
   pictures.forEach((item) => item.remove());
@@ -56,21 +65,22 @@ const repain = (evt, filter, data) => {
   evt.target.classList.add('img-filters__button--active');
 };
 
-const debounceRepain = debounce(repain);
+const debouncedRepaint = debounce(repaint);
 
 const initFilter = (data) => {
   filtersElement.classList.remove('img-filters--inactive');
+  filtersFormElement.addEventListener('click', onFiltersButtonClick);
 
   defaultButton.addEventListener('click', (evt) => {
-    debounceRepain(evt, FilterEnum.DEFAULT, data);
+    debouncedRepaint(evt, FilterEnum.DEFAULT, data);
   });
 
   randomButton.addEventListener('click', (evt) => {
-    debounceRepain(evt, FilterEnum.RANDOM, data);
+    debouncedRepaint(evt, FilterEnum.RANDOM, data);
   });
 
   discussedButton.addEventListener('click', (evt) => {
-    debounceRepain(evt, FilterEnum.DISCUSSED, data);
+    debouncedRepaint(evt, FilterEnum.DISCUSSED, data);
   });
 };
 

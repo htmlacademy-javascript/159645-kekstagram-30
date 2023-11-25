@@ -5,7 +5,7 @@ import { sendPicture } from './api.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
 
 const COUNT_MAX_HASHTAG = 5;
-const VALID_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const FILES_TYPES = ['jpg', 'jpeg', 'png'];
 const MAX_LENGTH = 140;
 
@@ -119,7 +119,7 @@ const normalizeTags = (tagString) => tagString
   .filter((tag) => Boolean(tag.length));
 
 const validateHashtags = (value) => normalizeTags(value)
-  .every((tag) => VALID_SIMBOLS.test(tag));
+  .every((tag) => VALID_SYMBOLS.test(tag));
 
 const validateHashtagsCount = (value) => normalizeTags(value)
   .length <= COUNT_MAX_HASHTAG;

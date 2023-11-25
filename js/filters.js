@@ -23,9 +23,7 @@ const compareNumbers = (pictureA, pictureB) => {
   return b - a;
 };
 
-const sortsPictures = (pictures) => {
-  return pictures.slice().sort(compareNumbers);
-};
+const sortsPictures = (pictures) => pictures.slice().sort(compareNumbers);
 
 const randomPictures = (data) => {
   const randomIndexList = [];

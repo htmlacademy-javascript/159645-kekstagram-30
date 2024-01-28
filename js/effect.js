@@ -81,7 +81,7 @@ const setImageStyle = () => {
   }
 
   const { value } = effectLevelElement;
-  const { style, unit} = effectToFilter[currentEffect];
+  const { style, unit } = effectToFilter[currentEffect];
   imageElement.style.filter = `${style}(${value}${unit})`;
 };
 

@@ -23,24 +23,24 @@ const compareNumbers = (pictureA, pictureB) => {
   return b - a;
 };
 
-const sortsPictures = (pictures) => pictures.slice().sort(compareNumbers);
+const sortPictures = (pictures) => pictures.slice().sort(compareNumbers);
 
-const randomPictures = (data) => {
-  const randomIndexList = [];
+const chooseRandomPictures = (data) => {
+  const indexes = [];
   const max = Math.min(MAX_RANDOM_FILTER, data.length);
-  while (randomIndexList.length < max) {
+  while (indexes.length < max) {
     const index = getRandomIndex(0, data.length);
-    if (!randomIndexList.includes(index)) {
-      randomIndexList.push(index);
+    if (!indexes.includes(index)) {
+      indexes.push(index);
     }
   }
-  return randomIndexList.map((index) => data[index]);
+  return indexes.map((index) => data[index]);
 };
 
 const filterHandlers = {
   [FilterEnum.DEFAULT]: (data) => data,
-  [FilterEnum.RANDOM]: (data) => randomPictures(data),
-  [FilterEnum.DISCUSSED]: (data) => sortsPictures(data)
+  [FilterEnum.RANDOM]: (data) => chooseRandomPictures(data),
+  [FilterEnum.DISCUSSED]: (data) => sortPictures(data)
 };
 
 const onFiltersButtonClick = (evt) => {

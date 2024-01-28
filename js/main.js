@@ -1,5 +1,5 @@
 import { renderGallery } from './gallery.js';
-import './form.js';
+import { setFormSubmit } from './form.js';
 import { loadPictures } from './api.js';
 import { showErrorMessage } from './utils.js';
 import { initFilter } from './filters.js';
@@ -15,3 +15,4 @@ const bootstrap = async () => {
 };
 
 bootstrap();
+setFormSubmit();

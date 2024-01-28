@@ -9,6 +9,7 @@ const hideMessage = () => {
   const existsElement = document.querySelector('.success') || document.querySelector('.error');
   existsElement.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
+  document.body.removeEventListener('click', onBodyClick);
 };
 
 const onCloseButtonClick = () => {
@@ -22,12 +23,12 @@ function onDocumentKeydown(evt) {
   }
 }
 
-const onBodyClick = (evt) => {
+function onBodyClick(evt) {
   if(evt.target.closest('.success__inner') || evt.target.closest('.error__inner')) {
     return;
   }
   hideMessage();
-};
+}
 
 const showMessage = (element, buttonClass) => {
   document.body.append(element);

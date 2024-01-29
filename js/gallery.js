@@ -14,6 +14,7 @@ const renderGallery = (pictures) => {
     evt.preventDefault();
     const thumbnailId = + thumbnail.dataset.thumbnailId;
     const pictureData = pictures.find(({ id }) => id === thumbnailId);
+
     showPicture(pictureData);
   });
 

@@ -13,7 +13,7 @@ const commentElement = document.querySelector('#comment')
   .content.querySelector('.social__comment');
 
 let commentsCoutShown = 0;
-let commentsArray = [];
+let comments = [];
 
 const createComment = ({ avatar, message, name }) => {
   const newComment = commentElement.cloneNode(true);
@@ -28,9 +28,9 @@ const createComment = ({ avatar, message, name }) => {
 const renderComments = () => {
   commentsCoutShown += COUNT_SHOWN_COMMENTS;
 
-  if (commentsCoutShown >= commentsArray.length) {
+  if (commentsCoutShown >= comments.length) {
     commentsLoaderElement.classList.add('hidden');
-    commentsCoutShown = commentsArray.length;
+    commentsCoutShown = comments.length;
   } else {
     commentsLoaderElement.classList.remove('hidden');
   }
@@ -38,7 +38,7 @@ const renderComments = () => {
   const fragment = document.createDocumentFragment();
 
   for (let i = 0; i < commentsCoutShown; i++) {
-    const comment = createComment(commentsArray[i]);
+    const comment = createComment(comments[i]);
     fragment.append(comment);
   }
 
@@ -46,7 +46,7 @@ const renderComments = () => {
   commentsListElement.append(fragment);
 
   shownCommentCountElement.textContent = commentsCoutShown;
-  totalCommentCountElement.textContent = commentsArray.length;
+  totalCommentCountElement.textContent = comments.length;
 };
 
 const onCommentsLoaderClick = () => {
@@ -70,17 +70,11 @@ function onDocumentKeydown(evt) {
   }
 }
 
-const renderPicture = ({ url, description, likes, comments }) => {
+const renderPicture = ({ url, description, likes }) => {
   bigPictureElement.querySelector('.big-picture__img img').src = url;
   bigPictureElement.querySelector('.big-picture__img img').alt = description;
   bigPictureElement.querySelector('.likes-count').textContent = likes;
   bigPictureElement.querySelector('.social__caption').textContent = description;
-
-  if (comments.length > 0) {
-    commentsArray = comments;
-  }
-
-  renderComments();
 };
 
 const showPicture = (pictureData) => {
@@ -88,6 +82,11 @@ const showPicture = (pictureData) => {
   bigPictureElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+
+  comments = pictureData.comments;
+  if (comments.length > 0) {
+    renderComments();
+  }
 
   renderPicture(pictureData);
 };
